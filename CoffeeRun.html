@@ -43,13 +43,13 @@
          switch(Vprice)
          {
             case 1:
-             PriceIcon = '<span class= "moneyPart"><img class="money" src="IMG/cash.png" alt="Price"></span>';
+             PriceIcon = '<img class="money" src="IMG/cash.png" alt="' + Vprice + '">';
              break
              case 2:
-             PriceIcon = '<img class="money" src="IMG/cash.png" alt="Price"><img class="money" src="IMG/cash.png" alt="Price">';
+             PriceIcon = '<img class="money" src="IMG/cash2.png" alt="' + Vprice + '">';
              break
              case 3:
-             PriceIcon = '<img class="money" src="IMG/cash.png" alt="Price"><img class="money" src="IMG/cash.png" alt="Price"><img class="money" src="IMG/cash.png" alt="Price">';
+             PriceIcon = '<img class="money" src="IMG/cash3.png" alt="' + Vprice + '">';
              break
          }
          
@@ -59,7 +59,7 @@
 
 
 
-	        x.innerHTML += '<div class="coffeePlace"> ' +  Vname  + '<br> Distance: ' + Vdist + ' <br> Price: ' + PriceIcon + '</div>';
+	        x.innerHTML += '<div class="coffeePlace"> ' +  Vname  + '<br> Distance: ' + Vdist + 'm <br> Price: ' + PriceIcon + '</div>';
    
       //x.innerHTML += '<br> ' + data.response.groups[0].items[index].venue.name + ' - Distance: ' + data.response.groups[0].items[index].venue.location.distance ;
   //alert(data.response.groups[0].items[index].venue.name);
