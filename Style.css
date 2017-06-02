@@ -4,13 +4,38 @@
    float: left;
    margin: 10px;
    padding: 10px;
-   max-width: 300px;
-   min-width: 200px;
-   height: 200px;
+   width: 300px;
+  
+   height: 300px;
    border: 1px solid black;
-}   
-
-.money{
-	
+   transition: box-shadow 1s;
+   background-color: #ffefcc;
 }
 
+.coffeePlace:hover {
+   box-shadow: 10px 10px 5px #4d3319;
+}  
+
+.naziv{
+	font-family: Impact, Charcoal, sans-serif;
+	color:black;
+
+}
+
+
+
+
+body{
+	background-color: #ac7339;
+}
+#dugmici{
+	 margin: auto;
+    width: 40%;
+   
+    padding: 10px;
+}
+
+#dugmici span{
+	color: black;
+	font-style: underline;
+}

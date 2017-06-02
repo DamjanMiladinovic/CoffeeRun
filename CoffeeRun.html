@@ -3,43 +3,63 @@
 <head>
 	<link rel="stylesheet" type="text/css" href="Style.css">
 	<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.2.1/jquery.min.js"></script>
+  <title>Hot cofee nearby</title>
 </head>
 <body>
-	<h1>Hot coffee Nearby</h1>
+	<h1 id="Naslov">CoffeeRun - Get your hot coffee before it cools down</h1>
+ 
 	<div id="loc"></div>	
+    <div id="loc2"></div>  
 
 
 
 
 	<script>
 	var x = document.getElementById("loc");
-
+ 
+  
 	function getloc() {
     	if (navigator.geolocation) {
-        	navigator.geolocation.getCurrentPosition(showPosition);
+        	navigator.geolocation.getCurrentPosition(showPosition, showError);
     				  } 
     	else { 
         		x.innerHTML = "Geolocation is not supported by this browser.";
     		   }
 					           }
 
+
+  
+
 	function showPosition(position) {
    		var mylat = position.coords.latitude;
    		var mylong = position.coords.longitude;
-   		var jsonstr = 'https://api.foursquare.com/v2/venues/explore?ll=' + mylat + ', ' + mylong + '8&section=coffee&radius=1000&openNow=1&sortByDistance=1%20&oauth_token=JDYNNCIGJB0ZBTYDH01PXUU332X01SMFVMPHTK3WGNPA4L3Q&v=20170601';
+    
+   		var jsonstr = 'https://api.foursquare.com/v2/venues/explore?v=20170206&ll=' + mylat + ', ' + mylong + '&section=coffee&radius=1000&venuePhotos=1&openNow=1&sortByDistance=1&client_id=Q2KFWH44VLKSSK2KE3T5HQ2FB0UFWJ1V3NBXJ3FZBITO51IY&client_secret=V44NG0HM2UYMUQSBBWLVKRIG0CPN3BUQ1DQ5TYJFP032FQV3';
   
 
 	   $.getJSON(jsonstr, function(data) {
 
-    	for(index in data.response.groups[0].items) {
+    	for(index in data.response.groups[0].items) 
+      {
+
       		var Vname = data.response.groups[0].items[index].venue.name;
       		var Vdist = data.response.groups[0].items[index].venue.location.distance;
       		var Vprice = data.response.groups[0].items[index].venue.price.tier;
-          var PriceIcon = 'bla';
-         // <img src="IMG/cash.png" alt="Price">
-         //if(Vprice = 1) { PriceIcon = '<img src="IMG/cash.png" alt="Price">';}
-         //if(Vprice = 2) { PriceIcon = '<img src="IMG/cash.png" alt="Price"><img src="IMG/cash.png" alt="Price">';}
-         //if(Vprice = 3) { PriceIcon = '<img src="IMG/cash.png" alt="Price"><img src="IMG/cash.png" alt="Price"><img src="IMG/cash.png" alt="Price">';}
+          var vID = data.response.groups[0].items[index].venue.id;
+          var vpho = data.response.groups[0].items[index].venue.contact.formattedPhone;
+          var vadr = data.response.groups[0].items[index].venue.location.address;
+          var PriceIcon;
+          var vimg = data.response.groups[0].items[index].venue.photos.groups[0].items[0].prefix + '150x150' + data.response.groups[0].items[index].venue.photos.groups[0].items[0].suffix;
+          
+
+          if (vadr == null){
+            vadr = "Infromation not available";
+          }
+
+            if (vpho == null){
+            vpho = "Infromation not available";
+          }
+
          switch(Vprice)
          {
             case 1:
@@ -52,28 +72,48 @@
              PriceIcon = '<img class="money" src="IMG/cash3.png" alt="' + Vprice + '">';
              break
          }
-         
-        
 
 
+       
 
+           x.innerHTML +='<div class="coffeePlace"><span class="naziv">' + Vname  + '</span><br><br><img src="' + vimg + '"> <br> Distance: ' + Vdist + 'm <br> Price: ' + PriceIcon + '<br>Adr: ' + vadr + '<br>Tel: ' + vpho + '</div>';
 
-
-	        x.innerHTML += '<div class="coffeePlace"> ' +  Vname  + '<br> Distance: ' + Vdist + 'm <br> Price: ' + PriceIcon + '</div>';
-   
-      //x.innerHTML += '<br> ' + data.response.groups[0].items[index].venue.name + ' - Distance: ' + data.response.groups[0].items[index].venue.location.distance ;
-  //alert(data.response.groups[0].items[index].venue.name);
-    
-													}
+         	       
+      
+			}
   
 										});
     
 									}
+
+
+      function showError(error) {
+    switch(error.code) {
+        case error.PERMISSION_DENIED:
+            alert("User denied the request for Geolocation. Geolocation is aquired to use application");
+            break;
+        case error.POSITION_UNAVAILABLE:
+            
+            alert("Location information is unavailable.");
+            break;
+        case error.TIMEOUT:
+            
+            alert("The request to get user location timed out.");
+            break;
+        case error.UNKNOWN_ERROR:
+            
+            alert("An unknown error occurred.");
+            break;
+    }
+}
+
+     
+
   $(document).ready(function(){
     getloc();
 
 
-  });
+     });
 
 
 
